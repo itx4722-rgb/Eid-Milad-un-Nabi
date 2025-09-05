@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Eid Milad-un-Nabi</title>
+<style>
+body{
+  margin:0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,"Noto Naskh Arabic",Arial,sans-serif;
+  color:#fff;
+  overflow:hidden;
+  background: radial-gradient(circle at top,#031e1a,#000);
+}
+
+/* Falling stars */
+.stars{position:fixed; inset:0; z-index:0; overflow:hidden;}
+.star{
+  position:absolute;
+  border-radius:50%;
+  background:white;
+  animation: fall linear infinite;
+}
+@keyframes fall{
+  0%{transform:translateY(-10px);}
+  100%{transform:translateY(110vh);}
+}
+
+/* Crescent Moon */
+.moon{
+  position:fixed;
+  top:10%;
+  right:15%;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #ffd166, #fff3c4);
+  box-shadow: 0 0 20px #ffd166aa;
+  animation: floatMoon 6s ease-in-out infinite alternate;
+}
+@keyframes floatMoon{
+  0%{transform: translateY(0);}
+  100%{transform: translateY(15px);}
+}
+
+/* Main Website */
+#mainPage{display:block; position:relative; min-height:100vh; padding:40px 20px; text-align:center;}
+.title{
+  font-size:clamp(28px,4vw,48px);
+  margin:20px 0;
+  text-shadow:0 0 20px #ffd166,0 0 40px #ffd166;
+  position:relative;
+}
+.title::after{
+  content:"✨";
+  position:absolute;
+  right:-25px;
+  top:-10px;
+  font-size:24px;
+  animation: sparkle 2s linear infinite;
+}
+@keyframes sparkle{
+  0%,100%{opacity:0;}
+  50%{opacity:1; transform:translateY(-5px);}
+}
+
+.card{
+  background:rgba(255,255,255,0.08);
+  padding:20px;
+  border-radius:20px;
+  backdrop-filter:blur(8px);
+  margin-top:20px;
+  transition: transform 0.3s;
+}
+.card:hover{transform: scale(1.02);}
+
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(90deg,#ffd166,#fff3c4);
+  color:#222;
+  font-weight:700;
+  margin:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+button:hover{transform:scale(1.1); box-shadow:0 0 15px #ffd166aa;}
+
+/* Footer */
+.footer{
+  position:relative;
+  margin-top:40px;
+  font-size:14px;
+  opacity:0.9;
+}
+.footer span{display:inline-block; font-weight:bold; font-size:16px; color:#ffd166;}
+.footer .glowAnim{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:-20px;
+  width:200px;
+  height:4px;
+  background:linear-gradient(90deg,#ffd166,#fff3c4,#ffd166);
+  border-radius:2px;
+  animation: moveGlow 2s linear infinite;
+}
+@keyframes moveGlow{0%{background-position:0 0;}100%{background-position:200% 0;}}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="moon"></div>
+
+<!-- Main Website -->
+<div id="mainPage">
+  <h1 class="title">عِید میلادُ النَّبِی ﷺ مبارک</h1>
+  <div class="card">
+    <p>🌙✨ اس مبارک دن کی خوشیاں آپ کو اور آپ کے گھر والوں کو مبارک ہوں ✨🌙</p>
+    <button id="shareBtn">لنک شیئر کریں</button>
+    <button id="duroodBtn">درود بھیجیں</button>
+  </div>
+  <div class="footer">THIS IS MADE BY <span>MANI-KING</span>
+    <div class="glowAnim"></div>
+  </div>
+</div>
+
+<script>
+// Falling stars
+const starsContainer=document.querySelector('.stars');
+for(let i=0;i<150;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  const size=Math.random()*2+1;
+  s.style.width=size+'px';
+  s.style.height=size+'px';
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*-100+'vh';
+  s.style.animationDuration=(2+Math.random()*4)+'s';
+  starsContainer.appendChild(s);
+}
+
+// Main website functionality
+function initMainWebsite(){
+  const shareBtn=document.getElementById('shareBtn');
+  shareBtn.addEventListener('click',()=>{
+    const msg='🌙✨ عید میلاد-un-نبی ﷺ کی مبارکباد ✨🌙\nاس خصوصی صفحے پر تشریف لائیں:\n'+window.location.href;
+    const encodedMsg=encodeURIComponent(msg);
+    window.open(`https://wa.me/?text=${encodedMsg}`,'_blank');
+  });
+
+  // Floating Durood
+  const duroodBtn = document.getElementById('duroodBtn');
+  duroodBtn.addEventListener('click', () => {
+    const durood = document.createElement('div');
+    durood.textContent = 'ﷺ';
+    durood.style.position = 'fixed';
+    durood.style.left = Math.random() * 80 + 10 + '%';
+    durood.style.bottom = '0px';
+    durood.style.fontSize = '24px';
+    durood.style.color = '#ffd166';
+    durood.style.fontWeight = 'bold';
+    durood.style.pointerEvents = 'none';
+    durood.style.opacity = '1';
+    durood.style.transition = 'transform 2s ease-out, opacity 2s ease-out';
+    document.body.appendChild(durood);
+
+    setTimeout(() => {
+      durood.style.transform = 'translateY(-200px) scale(1.5)';
+      durood.style.opacity = '0';
+    }, 50);
+
+    setTimeout(() => { document.body.removeChild(durood); }, 2000);
+  });
+}
+
+initMainWebsite();
+</script>
+
+</body>
+</html>
